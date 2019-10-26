@@ -22,6 +22,8 @@ public class FichaEDEx4 {
         System.out.println(teste.save.toString());
         System.out.println(teste.key.toString());
         
+        System.out.println(teste.descodifica("53174"));
+        
     }
     
 }
