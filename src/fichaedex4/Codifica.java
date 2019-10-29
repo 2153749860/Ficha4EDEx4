@@ -11,7 +11,7 @@ package fichaedex4;
  */
 public class Codifica {
 
-    public CircularArrayQueue<Character> save;
+        public CircularArrayQueue<Character> save;
     public CircularArrayQueue<Integer> key;
 
     public Codifica(String key) {
@@ -36,12 +36,14 @@ public class Codifica {
 
             for (int i = 0; i < texto.length(); i++) {
                 int k = key.dequeue();
+                key.enqueue(k);
                 int ch = (int) textoArray[i];
                 ch = ch + k;
                 char c;
                 c = (char) ch;
 
                 this.save.enqueue(c);
+                
 
             }
 
@@ -50,22 +52,30 @@ public class Codifica {
     }
 
     public String descodifica(String key) throws EmptyCollectionException2 {
+        while(!this.key.isEmpty()){
+            this.key.dequeue();
+        }
+        
         this.passarKey(key);
-        char[] resultado = new char[key.length()];
-
-        for (int i = 0; i < key.length(); i++) {
+        char[] resultado = new char[this.save.size()];
+        
+        int tmp = 0;
+        while(!this.save.isEmpty()) {
             char c = this.save.dequeue();
 
             int ch = (int) c;
             int k = this.key.dequeue();
+            this.key.enqueue(k);
 
             ch = ch - k;
 
-            resultado[i] = (char) ch;
+            resultado[tmp] = (char) ch;
+            tmp++;
         }
 
         String string = new String(resultado);
         return string;
     }
+
 
 }
